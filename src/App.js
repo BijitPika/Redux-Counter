@@ -1,25 +1,38 @@
-import logo from './logo.svg';
+import React from 'react'
 import './App.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { upValue, downValue, clearValue } from './Redux/Action';
+
 
 function App() {
+  const { value } = useSelector((select) => select.myReducer)
+  // console.log(value);
+
+  const dispatch = useDispatch()
+
+  const decrementValue = () => {
+
+    dispatch(downValue(value))
+  }
+  const incrementValue = () => {
+    dispatch(upValue(value))
+  }
+  const resetValue = () => {
+    dispatch(clearValue(value))
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="App">
+        <h1>Redux Counter</h1>
+        <div className='Counter'>
+          <button onClick={decrementValue}>Decrement -1</button> <span>{value}</span> <button onClick={incrementValue}>Increment +1</button>
+        </div>
+        <button onClick={resetValue} className='btn'>Reset</button>
+      </div>
+    </>
   );
 }
 
 export default App;
+
